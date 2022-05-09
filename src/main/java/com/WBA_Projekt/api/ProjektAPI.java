@@ -82,7 +82,7 @@ public class ProjektAPI {
     public Response updateProject(Projekt projekt) throws SystemException {
         // Check if the project already exists
         Projekt existingProject = em.find(Projekt.class, projekt.getProjektID());
-        if (existingProject != null) {
+        if (existingProject == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         // Check if the projekt is valid
