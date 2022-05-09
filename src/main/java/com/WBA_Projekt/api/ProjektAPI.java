@@ -146,7 +146,7 @@ public class ProjektAPI {
             // Check if the artefact already exists
             Projekt_Artefakt existingArtefact = em.find(Projekt_Artefakt.class, projekt_Artefakt.getArtefaktId());
             if (existingArtefact != null) {
-                return Response.status(Response.Status.CONFLICT).build();
+                return Response.status(Response.Status.NOT_FOUND).build();
             }
             // Check if the artefact is valid
             if (projekt_Artefakt.getArbeitszeit() < 0) {
