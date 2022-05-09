@@ -112,21 +112,27 @@ public class ArtefaktAPI {
     @DELETE
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteArtefakt(Artefakt artefakt) throws SystemException {
+    @Path("/{id}")
+    public Response deleteArtefakt(@PathParam("id") String id) throws SystemException {
         // Check if the artefakt already exists
-        Artefakt existingArtefakt = em.find(Artefakt.class, artefakt.getArtefaktID());
-        if (existingArtefakt == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        // Delete the artefakt
+        System.out.println(id);
         try {
-            utx.begin();
-            em.remove(existingArtefakt);
-            utx.commit();
-        } catch (Exception e) {
-            utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            Artefakt existingArtefakt = em.find(Artefakt.class, Integer.parseInt(id));
+            if (existingArtefakt == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            // Delete the artefakt
+            try {
+                utx.begin();
+                em.remove(existingArtefakt);
+                utx.commit();
+            } catch (Exception e) {
+                utx.rollback();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+            return Response.status(Response.Status.NO_CONTENT).build();
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return Response.status(Response.Status.NO_CONTENT).build();
     }
 }

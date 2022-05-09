@@ -116,24 +116,29 @@ public class AufgabenbereichAPI {
     @DELETE
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteAufgabenbereich(Aufgabenbereich aufgabenbereich) throws SystemException {
-        // Check if the aufgabenbereich exists
-        Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, aufgabenbereich.getAufgabenbereichID());
-        if (existingAufgabenbereich == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-        // Delete the aufgabenbereich
+    @Path("/{id}")
+    public Response deleteAufgabenbereich(@PathParam("id") String id) throws SystemException {
         try {
-            utx.begin();
-            em.remove(existingAufgabenbereich);
-            utx.commit();
-        } catch (Exception e) {
-            utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+            // Check if the aufgabenbereich exists
+            Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, Integer.parseInt(id));
+            if (existingAufgabenbereich == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
 
-        return Response.status(Response.Status.NO_CONTENT).build();
+            // Delete the aufgabenbereich
+            try {
+                utx.begin();
+                em.remove(existingAufgabenbereich);
+                utx.commit();
+            } catch (Exception e) {
+                utx.rollback();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+
+            return Response.status(Response.Status.NO_CONTENT).build();
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     // Add Projekt to Aufgabenbereich
@@ -170,13 +175,13 @@ public class AufgabenbereichAPI {
 
     // Delete Projekt from Aufgabenbereich
     @DELETE
-    @Path("/{id}/projekt")
+    @Path("/{id}/projekt/{aid}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteProjekt(@PathParam("id") String id, Projekt_Aufgabenbereich projekt_aufgabenbereich) {
+    public Response deleteProjekt(@PathParam("id") String id, @PathParam("aid") String aid) throws SystemException {
         try {
             // Check if the Projekt_Aufgabenbereich exists
-            Projekt_Aufgabenbereich existingProjekt_Aufgabenbereich = em.find(Projekt_Aufgabenbereich.class, projekt_aufgabenbereich.getId());
+            Projekt_Aufgabenbereich existingProjekt_Aufgabenbereich = em.find(Projekt_Aufgabenbereich.class, Integer.parseInt(aid));
             if (existingProjekt_Aufgabenbereich == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -190,7 +195,7 @@ public class AufgabenbereichAPI {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
             return Response.status(Response.Status.NO_CONTENT).build();
-        } catch (NumberFormatException | SystemException e) {
+        } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }

@@ -108,22 +108,27 @@ public class ProjektAPI {
     @DELETE
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteProject(Projekt projekt) throws SystemException {
+    @Path("/{id}")
+    public Response deleteProject(@PathParam("id") String id) throws SystemException {
         // Check if the project already exists
-        Projekt existingProject = em.find(Projekt.class, projekt.getProjektID());
-        if (existingProject == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-        // Delete the project
         try {
-            utx.begin();
-            em.remove(existingProject);
-            utx.commit();
-        } catch (Exception e) {
-            utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            Projekt existingProject = em.find(Projekt.class, Integer.parseInt(id));
+            if (existingProject == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            // Delete the project
+            try {
+                utx.begin();
+                em.remove(existingProject);
+                utx.commit();
+            } catch (Exception e) {
+                utx.rollback();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+            return Response.status(Response.Status.NO_CONTENT).build();
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     // Add Artefact to Project
@@ -166,13 +171,13 @@ public class ProjektAPI {
 
     // Delete Artefact from Project
     @DELETE
-    @Path("/{id}/artefact")
+    @Path("/{id}/artefact/{aid}")
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteArtefact(@PathParam("id") String id, Projekt_Artefakt projekt_Artefakt) {
+    public Response deleteArtefact(@PathParam("id") String id, @PathParam("aid") String aid) throws SystemException {
         // Check if the Project_Artefakt exists
         try {
-            Projekt_Artefakt existingRelation = em.find(Projekt_Artefakt.class, projekt_Artefakt.getId());
+            Projekt_Artefakt existingRelation = em.find(Projekt_Artefakt.class, Integer.parseInt(aid));
             if (existingRelation == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
@@ -186,7 +191,7 @@ public class ProjektAPI {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
             return Response.status(Response.Status.NO_CONTENT).build();
-        } catch (NumberFormatException | SystemException e) {
+        } catch (NumberFormatException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
