@@ -9,6 +9,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -52,7 +53,7 @@ public class ArtefaktAPI {
     @POST
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addArtefakt(Artefakt artefakt) {
+    public Response addArtefakt(Artefakt artefakt) throws SystemException {
         // Check if the artefakt already exists
         Artefakt existingArtefakt = em.find(Artefakt.class, artefakt.getArtefaktID());
         if (existingArtefakt != null) {
@@ -69,6 +70,7 @@ public class ArtefaktAPI {
             em.persist(artefakt);
             utx.commit();
         } catch (Exception e) {
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
@@ -79,7 +81,7 @@ public class ArtefaktAPI {
     @PATCH
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateArtefakt(Artefakt artefakt) {
+    public Response updateArtefakt(Artefakt artefakt) throws SystemException {
         // Check if the artefakt already exists
         Artefakt existingArtefakt = em.find(Artefakt.class, artefakt.getArtefaktID());
         if (existingArtefakt == null) {
@@ -95,6 +97,7 @@ public class ArtefaktAPI {
             em.merge(artefakt);
             utx.commit();
         } catch (Exception e) {
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         // Get the artefakt
@@ -109,7 +112,7 @@ public class ArtefaktAPI {
     @DELETE
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteArtefakt(Artefakt artefakt) {
+    public Response deleteArtefakt(Artefakt artefakt) throws SystemException {
         // Check if the artefakt already exists
         Artefakt existingArtefakt = em.find(Artefakt.class, artefakt.getArtefaktID());
         if (existingArtefakt == null) {
@@ -121,6 +124,7 @@ public class ArtefaktAPI {
             em.remove(existingArtefakt);
             utx.commit();
         } catch (Exception e) {
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Response.Status.NO_CONTENT).build();

@@ -10,6 +10,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -50,7 +51,7 @@ public class ProjektAPI {
     @POST
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addProject(Projekt projekt) {
+    public Response addProject(Projekt projekt) throws SystemException {
         // Check if the project already exists
         Projekt existingProject = em.find(Projekt.class, projekt.getProjektID());
         if (existingProject != null) {
@@ -68,6 +69,7 @@ public class ProjektAPI {
             em.persist(projekt);
             utx.commit();
         } catch (Exception e) {
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
@@ -77,7 +79,7 @@ public class ProjektAPI {
     @PATCH
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateProject(Projekt projekt) {
+    public Response updateProject(Projekt projekt) throws SystemException {
         // Check if the project already exists
         Projekt existingProject = em.find(Projekt.class, projekt.getProjektID());
         if (existingProject != null) {
@@ -94,6 +96,7 @@ public class ProjektAPI {
             em.merge(projekt);
             utx.commit();
         } catch (Exception e) {
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         // Get the updated project
@@ -105,7 +108,7 @@ public class ProjektAPI {
     @DELETE
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteProject(Projekt projekt) {
+    public Response deleteProject(Projekt projekt) throws SystemException {
         // Check if the project already exists
         Projekt existingProject = em.find(Projekt.class, projekt.getProjektID());
         if (existingProject == null) {
@@ -117,6 +120,7 @@ public class ProjektAPI {
             em.remove(existingProject);
             utx.commit();
         } catch (Exception e) {
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
@@ -150,11 +154,12 @@ public class ProjektAPI {
                 em.persist(projekt_Artefakt);
                 utx.commit();
             } catch (Exception e) {
+                utx.rollback();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
             // Get the updated project
             return Response.status(Response.Status.NO_CONTENT).build();
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | SystemException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
@@ -177,10 +182,11 @@ public class ProjektAPI {
                 em.remove(existingRelation);
                 utx.commit();
             } catch (Exception e) {
+                utx.rollback();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
             return Response.status(Response.Status.NO_CONTENT).build();
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | SystemException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }

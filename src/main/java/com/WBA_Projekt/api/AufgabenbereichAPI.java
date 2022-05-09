@@ -11,6 +11,7 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -31,7 +32,7 @@ public class AufgabenbereichAPI {
     // Gets all the aufgabenbereiche or if a specific aufgabenbereich is requested returns that aufgabenbereich
     @GET
     @Produces("application/json")
-    public Response getAufgabenbereiche(@QueryParam("id") String id) {
+    public Response getAufgabenbereiche(@QueryParam("id") String id) throws SystemException {
         if (id == null) {
             List<Aufgabenbereich> aufgabenbereiche = em.createNamedQuery("Aufgabenbereich.findAll", Aufgabenbereich.class).getResultList();
             if (aufgabenbereiche.isEmpty()) {
@@ -47,6 +48,7 @@ public class AufgabenbereichAPI {
             }
             return Response.ok(aufgabenbereich).build();
         } catch (NumberFormatException e) {
+            utx.rollback();
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
@@ -55,7 +57,7 @@ public class AufgabenbereichAPI {
     @POST
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addAufgabenbereich(Aufgabenbereich aufgabenbereich) {
+    public Response addAufgabenbereich(Aufgabenbereich aufgabenbereich) throws SystemException {
         // Check if the aufgabenbereich already exists
         Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, aufgabenbereich.getAufgabenbereichID());
         if (existingAufgabenbereich != null) {
@@ -74,7 +76,7 @@ public class AufgabenbereichAPI {
             em.persist(aufgabenbereich);
             utx.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Response.Status.NO_CONTENT).build();
@@ -84,7 +86,7 @@ public class AufgabenbereichAPI {
     @PATCH
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateAufgabenbereich(Aufgabenbereich aufgabenbereich) {
+    public Response updateAufgabenbereich(Aufgabenbereich aufgabenbereich) throws SystemException {
         // Check if the aufgabenbereich exists
         Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, aufgabenbereich.getAufgabenbereichID());
         if (existingAufgabenbereich == null) {
@@ -102,6 +104,7 @@ public class AufgabenbereichAPI {
             em.merge(aufgabenbereich);
             utx.commit();
         } catch (Exception e) {
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         // Get the updated aufgabenbereich
@@ -113,7 +116,7 @@ public class AufgabenbereichAPI {
     @DELETE
     @Consumes("application/json")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteAufgabenbereich(Aufgabenbereich aufgabenbereich) {
+    public Response deleteAufgabenbereich(Aufgabenbereich aufgabenbereich) throws SystemException {
         // Check if the aufgabenbereich exists
         Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, aufgabenbereich.getAufgabenbereichID());
         if (existingAufgabenbereich == null) {
@@ -126,6 +129,7 @@ public class AufgabenbereichAPI {
             em.remove(existingAufgabenbereich);
             utx.commit();
         } catch (Exception e) {
+            utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
@@ -155,10 +159,11 @@ public class AufgabenbereichAPI {
                 em.persist(projekt_aufgabenbereich);
                 utx.commit();
             } catch (Exception e) {
+                utx.rollback();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
             return Response.status(Response.Status.NO_CONTENT).build();
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | SystemException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
@@ -181,10 +186,11 @@ public class AufgabenbereichAPI {
                 em.remove(existingProjekt_Aufgabenbereich);
                 utx.commit();
             } catch (Exception e) {
+                utx.rollback();
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
             return Response.status(Response.Status.NO_CONTENT).build();
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | SystemException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
