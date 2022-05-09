@@ -83,7 +83,7 @@ public class ProjektAPI {
         // Check if the project already exists
         Projekt existingProject = em.find(Projekt.class, projekt.getProjektID());
         if (existingProject != null) {
-            return Response.status(Response.Status.CONFLICT).build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
         // Check if the projekt is valid
         if (projekt.getBeschreibung().length() > 255) {
