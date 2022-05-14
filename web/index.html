@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudBoard</title>
+</head>
+
+<body>
+    <header class="header">
+        <picture class="header__logo">
+            <source media="(min-width: 1920px)" srcset="images\header1920x200.png" type="image/png">
+            <source media="(min-width: 1280px)" srcset="images\header1280x133.png" type="image/png">
+            <source media="(min-width: 640px)" srcset="images\header640x67.png" type="image/png">
+            <img src="images\header320x34.png" alt="StudBoard Logo">
+        </picture>
+        <div class="header-infos">
+            <a href="index.html">
+                <svg class="header-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+            </a>
+            <a href="projekte.html" class="header-link">Projekte</a>
+            <a href="neuesprojekt.html" class="header-link">Neues Projekt</a>
+            <div class="header-login">
+                <input type="text" placeholder="Benutzername" class="header-login__input" id="user-name-input">
+                <button class="header-login__button" id="login-button">Login</button>
+                <input type="password" placeholder="Passwort" class="header-login__input" id="password-input">
+                <button class="header-login__button" id="register-button">Registrieren</button>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <h1 class="main__title">Willkommen bei <br>StudBoard</h1>
+        <div class="main__content">
+            <h2 class="main__subtitle">Hier findest du alle Projekte, die du erstellt hast.</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <div class="newest_projects">
+                <h2 class="newest_projects__title">Neueste Projekte</h2>
+                <div class="newest_projects__project">
+                    <a href="./projektdetails.html?id=1">
+                        <h3 class="newest_projects__project__info__title">Projekt 1</h3>
+                    </a>
+                    <div class="newest_projects_project_content">
+                        <div class="newest_projects__project__image">
+                            <img src="images/projects/1.png" alt="Projekt 1">
+
+                            <div class="newest_projects__project__info">
+                                <p class="newest_projects__project__info__description">Lorem ipsum dolor sit amet,
+                                    consectetur
+                                    adipiscing elit. Nullam euismod, nisi vel consectetur interdum, nisl nisi tincidunt
+                                    nisi,
+                                    eget consectetur nisl nisi eget.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer__content">
+            <div class="footer__content__inner">
+                <a href="./impressum.html">
+                    <h3 class="footer__content__inner__title">Impressum</h3>
+                </a>
+                <a href="./datenschutz.html">
+                    <h3 class="footer__content__inner__title">Datenschutz</h3>
+                </a>
+                <a href="./haftungsausschluss.html">
+                    <h3 class="footer__content__inner__title">Haftungsausschluss</h3>
+                </a>
+                <a href="./kontakt.html">
+                    <h3 class="footer__content__inner__title">Kontakt</h3>
+                </a>
+                <p class="footer__content__inner__copyright">© 2022 StudBoard</p>
+            </div>
+            <div class="back-to-top">
+                <button class="back-to-top__btn" onclick="scrollToTop()">
+                    <svg class="back-to-top__btn__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+                        <path d="M0 0h24v24H0z" fill="none" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </footer>
+</body>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto', sans-serif;
+        background-color: #fafafa;
+    }
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fafafa;
+        padding-bottom: 0.5rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .header__logo {
+        object-fit: contain;
+    }
+
+    .header-infos {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 0.5rem;
+    }
+
+    .header-infos a {
+        margin: 0px 35px;
+    }
+
+    .header-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: #000;
+    }
+
+    .header-icon:hover {
+        fill: #555;
+    }
+
+    .header-link {
+        margin-left: 1rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #000;
+        text-decoration: none;
+    }
+
+    .header-link:hover {
+        color: #555;
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .main__title {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .main__subtitle {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 1rem;
+    }
+
+    .main__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 1rem;
+    }
+
+    .newest_projects {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 1rem;
+    }
+
+    .newest_projects__title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 1rem;
+    }
+
+    .newest_projects__project {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 1rem;
+    }
+
+    .newest_projects__project__image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .newest_projects__project__image img {
+        width: 100%;
+        height: 100%;
+        max-width: 450px;
+        object-fit: contain;
+    }
+
+    .newest_projects_project_content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 450px;
+        margin-bottom: 1rem;
+    }
+
+    .newest_projects__project__info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 450px;
+        margin-bottom: 1rem;
+    }
+
+    .newest_projects__project__info__title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 1rem;
+    }
+
+    .newest_projects__project__info__title:hover {
+        color: #555;
+    }
+
+    .newest_projects__project__info__description {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 1rem;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        background-color: #fafafa;
+        padding: 0.5rem;
+        box-shadow: 0px -20px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .footer__content {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 1rem;
+    }
+
+    .footer__content__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 1rem;
+    }
+
+    .footer__content__inner__title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .back-to-top {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 800px;
+        margin-bottom: 1rem;
+    }
+
+    .back-to-top__btn {
+        width: 32px;
+        height: 32px;
+        fill: #000;
+        padding: 0;
+    }
+
+    .header-login {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 240px;
+        max-width: 800px;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-content: center;
+    }
+
+    .header-login__button {
+        fill: #000;
+        padding: 3;
+    }
+
+    .header-login__input {
+        width: 128px;
+        margin-bottom: 4px;
+    }
+
+
+</style>
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    const loginBtn = document.getElementById('login-button');
+    const registerBtn = document.getElementById('register-button');
+    const userNameInput = document.getElementById('user-name-input');
+    const passwordInput = document.getElementById('password-input');
+    // If pressed on login button
+    loginBtn.addEventListener('click', function () {
+        const userName = userNameInput.value;
+        const password = passwordInput.value;
+        const xhr = new XMLHttpRequest();
+        if (userName.trim() === '' || password.trim() === '') {
+            alert('Please enter your user name and password');
+            return;
+        }
+        xhr.open('POST', 'api/login');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            userName: userName,
+            password: password
+        }));
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // set session
+                    sessionStorage.setItem('userName', userName);
+                } else {
+                    alert(response.message);
+                }
+            } else {
+                alert('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+    });
+
+    // If pressed on register button
+    registerBtn.addEventListener('click', function () {
+        const userName = userNameInput.value;
+        const password = passwordInput.value;
+        const xhr = new XMLHttpRequest();
+        if (userName.trim() === '' || password.trim() === '') {
+            alert('Please enter your user name and password');
+            return;
+        }
+        xhr.open('POST', 'api/register');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            userName: userName,
+            password: password
+        }));
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // set session
+                    sessionStorage.setItem('userName', userName);
+                } else {
+                    alert(response.message);
+                }
+            } else {
+                alert('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+    });
+
+</script>
+</html>
