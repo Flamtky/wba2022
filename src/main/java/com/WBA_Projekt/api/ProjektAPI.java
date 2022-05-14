@@ -1,5 +1,6 @@
 package com.WBA_Projekt.api;
 
+import com.WBA_Projekt.classes.Artefakt;
 import com.WBA_Projekt.classes.Projekt;
 import com.WBA_Projekt.classes.Projekt_Artefakt;
 
@@ -144,8 +145,8 @@ public class ProjektAPI {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
             // Check if the artefact already exists
-            Projekt_Artefakt existingArtefact = em.find(Projekt_Artefakt.class, projekt_Artefakt.getArtefaktId());
-            if (existingArtefact != null) {
+            Artefakt existingArtefact = em.find(Artefakt.class, projekt_Artefakt.getArtefaktId());
+            if (existingArtefact == null) {
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
             // Check if the artefact is valid
