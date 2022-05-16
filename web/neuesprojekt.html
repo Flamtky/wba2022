@@ -34,19 +34,22 @@
     </header>
     <main class="main">
         <h1 class="main__title">Neues Projekt</h1>
-        <div>
+        <div class="main__div">
             <form class="main__content" action="projekte.html" method="get">
-                <input type="text" placeholder="Projekttitel" required class="header-login__input" id="projekttitel">
-                <input type="date" placeholder="Startdatum" required class="header-login__input" id="start-date-input">
-                <input type="date" placeholder="Enddatum" required class="header-login__input" id="end-date-input">
-                <input type="text" placeholder="Kurzbeschreibung" required class="header-login__input" id="kurzbeschreibung">
-                <input type="text" placeholder="Langbeschreibung" class="header-login__input" id="langbeschreibung">
-                <input type="text" placeholder="1. Projektziel" class="header-login__input" id="1projektziel">
-                <input type="text" placeholder="2. Projektziel" class="header-login__input" id="2projektziel">
-                <input type="file" accept="image/*" hidden required class="header-login__input" id="logo-input">
-                <input type="button" value="Logo auswählen..." onclick="document.getElementById('logo-input').click();" />
-                <button type="submit" class="header-login__button" id="save-button">Speichern</button>
+                <input type="text" placeholder="Projekttitel" required class="neues_project_input id=" projekttitel">
+                <input type="date" placeholder="Startdatum" required class="neues_project_input id=" start-date-input">
+                <input type="date" placeholder="Enddatum" required class="neues_project_input id=" end-date-input">
+                <input type="text" placeholder="Kurzbeschreibung" required class="neues_project_input id="
+                    kurzbeschreibung">
+                <input type="text" placeholder="Langbeschreibung" class="neues_project_input id=" langbeschreibung">
+                <input type="text" placeholder="1. Projektziel" class="neues_project_input id=" 1projektziel">
+                <input type="text" placeholder="2. Projektziel" class="neues_project_input id=" 2projektziel">
+                <input type="file" accept="image/*" hidden required id="logo-input">
+                <input type="button" value="Logo auswählen..." class="neues_project_input"
+                    onclick="document.getElementById('logo-input').click();" />
+                <button type="submit" class="neues_project_input" id="save-button">Speichern</button>
             </form>
+            <img hidden src="" alt="Logo" class="main__logo" id="logo_showcase">
         </div>
     </main>
     <footer class="footer">
@@ -69,7 +72,7 @@
             <div class="back-to-top">
                 <button class="back-to-top__btn" onclick="scrollToTop()">
                     <svg class="back-to-top__btn__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                         viewBox="0 0 24 24">
+                        viewBox="0 0 24 24">
                         <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
                         <path d="M0 0h24v24H0z" fill="none" />
                     </svg>
@@ -153,6 +156,12 @@
         text-align: center;
     }
 
+    .main__div {
+        width: 400px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
     .main__content {
         display: flex;
         flex-direction: column;
@@ -185,11 +194,14 @@
 
     .footer__content__inner {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         align-items: center;
         width: 100%;
         max-width: 800px;
         margin-bottom: 1rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: space-between;
     }
 
     .footer__content__inner__title {
@@ -236,5 +248,106 @@
         margin-bottom: 4px;
     }
 
-    </style>
+    .neues_project_input {
+        width: 200px;
+        margin-bottom: 4px;
+    }
+
+    .main__logo {
+        max-width: 60%;
+        max-height: 120px;
+        padding-left: 50px;
+    }
+</style>
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    const loginBtn = document.getElementById('login-button');
+    const registerBtn = document.getElementById('register-button');
+    const userNameInput = document.getElementById('user-name-input');
+    const passwordInput = document.getElementById('password-input');
+    // If pressed on login button
+    loginBtn.addEventListener('click', function () {
+        const userName = userNameInput.value;
+        const password = passwordInput.value;
+        const xhr = new XMLHttpRequest();
+        if (userName.trim() === '' || password.trim() === '') {
+            alert('Please enter your user name and password');
+            return;
+        }
+        xhr.open('POST', 'api/login');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            userName: userName,
+            password: password
+        }));
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // set session
+                    sessionStorage.setItem('userName', userName);
+                } else {
+                    alert(response.message);
+                }
+            } else {
+                alert('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+    });
+
+    // If pressed on register button
+    registerBtn.addEventListener('click', function () {
+        const userName = userNameInput.value;
+        const password = passwordInput.value;
+        const xhr = new XMLHttpRequest();
+        if (userName.trim() === '' || password.trim() === '') {
+            alert('Please enter your user name and password');
+            return;
+        }
+        xhr.open('POST', 'api/register');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            userName: userName,
+            password: password
+        }));
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // set session
+                    sessionStorage.setItem('userName', userName);
+                } else {
+                    alert(response.message);
+                }
+            } else {
+                alert('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+    });
+
+    // if file is uploaded
+    const inp = document.getElementById('logo-input');
+
+    inp.addEventListener('change', function (evt) {
+        console.log(evt.target.files[0]);
+        const file = evt.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = document.getElementById('logo_showcase');
+            img.src = e.target.result;
+            img.hidden = false;
+        };
+        reader.readAsDataURL(file); // convert to base64 string
+    });
+
+</script>
+
 </html>
