@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudBoard</title>
+    <link rel="stylesheet" type="text/css" href="static/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/projekte.css" />
 </head>
 
 <body>
@@ -182,7 +184,7 @@
                 <p class="footer__content__inner__copyright">© 2022 StudBoard</p>
             </div>
             <div class="back-to-top">
-                <button class="back-to-top__btn" onclick="scrollToTop()">
+                <button class="back-to-top__btn" onclick="location.href='#top'">
                     <svg class="back-to-top__btn__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24">
                         <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
@@ -193,217 +195,7 @@
         </div>
     </footer>
 </body>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Roboto', sans-serif;
-        background-color: #fafafa;
-    }
-
-    .header {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #fafafa;
-        padding-bottom: 0.5rem;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-
-    .header__logo {
-        object-fit: contain;
-    }
-
-    .header-infos {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0px 0.5rem;
-    }
-
-    .header-infos a {
-        margin: 0px 35px;
-    }
-
-    .header-icon {
-        width: 1.5rem;
-        height: 1.5rem;
-        fill: #000;
-    }
-
-    .header-icon:hover {
-        fill: #555;
-    }
-
-    .header-link {
-        margin-left: 1rem;
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #000;
-        text-decoration: none;
-    }
-
-    .header-link:hover {
-        color: #555;
-    }
-
-    .main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-        background-color: #fff;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .main__title {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #000;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-
-    .main__subtitle {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #000;
-        margin-bottom: 1rem;
-    }
-
-    .main__content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 1200px;
-        margin-bottom: 1rem;
-    }
-
-    .projectlist {
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-        flex-direction: row;
-        padding-top: 1rem;
-    }
-
-    .project_overview {
-        min-width: 100px;
-    }
-
-    .project_grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        grid-gap: 1rem;
-        margin-bottom: 1rem;
-        justify-items: center;
-        width:800px;
-    }
-
-    .project_grid_item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 300px;
-        margin-bottom: 1rem;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        padding-left: 1rem;
-    }
-
-    .footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-direction: column;
-        background-color: #fafafa;
-        padding: 0.5rem;
-        box-shadow: 0px -20px 20px 0px rgba(0, 0, 0, 0.1);
-    }
-
-    .footer__content {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: 800px;
-        margin-bottom: 1rem;
-    }
-
-    .footer__content__inner {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        width: 100%;
-        max-width: 800px;
-        margin-bottom: 1rem;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-content: space-between;
-    }
-
-    .footer__content__inner__title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-
-    .back-to-top {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        max-width: 800px;
-        margin-bottom: 1rem;
-    }
-
-    .back-to-top__btn {
-        width: 32px;
-        height: 32px;
-        fill: #000;
-        padding: 0;
-    }
-
-    .header-login {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        width: 240px;
-        max-width: 800px;
-        flex-wrap: wrap;
-        flex-direction: row;
-        align-content: center;
-    }
-
-    .header-login__button {
-        fill: #000;
-        padding: 3px;
-        margin-bottom: 4px;
-    }
-
-    .header-login__input {
-        width: 128px;
-        margin-bottom: 4px;
-    }
-</style>
 <script>
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-
     const loginBtn = document.getElementById('login-button');
     const registerBtn = document.getElementById('register-button');
     const userNameInput = document.getElementById('user-name-input');
