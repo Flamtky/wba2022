@@ -1,4 +1,3 @@
-
 class ProjektSort {
     constructor(projektListe) {
         this.projektListe = projektListe;

@@ -1,5 +1,4 @@
-
-export default class Aufgabenbereiche {
+class Aufgabenbereiche {
 
     constructor(name, beschreibung) {
         this.name = name;

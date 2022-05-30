@@ -1,5 +1,4 @@
-
-export default class Projekt {
+class Projekt {
 
   constructor(name, beschreibung, logoPath, startDatum) {
     this.name = name;
@@ -19,5 +18,4 @@ export default class Projekt {
     }
     return laufzeit
   }
-
 }

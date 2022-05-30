@@ -1,5 +1,4 @@
-
-export default class Projekt_Aufgabenbereich {
+class Projekt_Aufgabenbereich {
 
     constructor(projektId, aufgabenbereichId) {
         this.projektId = projektId;

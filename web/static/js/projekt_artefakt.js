@@ -1,5 +1,4 @@
-
-export default class Projekt_Artefakt {
+class Projekt_Artefakt {
 
     constructor(projektId, artefaktId, arbeitszeit) {
         this.projektId = projektId;
