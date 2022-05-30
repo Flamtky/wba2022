@@ -1,6 +1,7 @@
 class Projekt_Artefakt {
 
-    constructor(projektId, artefaktId, arbeitszeit) {
+    constructor(id, projektId, artefaktId, arbeitszeit) {
+        this.id = id;
         this.projektId = projektId;
         this.artefaktId = artefaktId;
         this.arbeitszeit = arbeitszeit;

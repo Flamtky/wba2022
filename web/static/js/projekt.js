@@ -1,10 +1,12 @@
 class Projekt {
 
-  constructor(name, beschreibung, logoPath, startDatum) {
+  constructor(id, name, beschreibung, logoPath, startDatum) {
+    this.id = id;
     this.name = name;
     this.beschreibung = beschreibung;
     this.logoPath = logoPath;
     this.startDatum = startDatum;
+    // TODO: Ziele ????
   }
 
   get projektLaufzeit() {

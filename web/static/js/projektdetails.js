@@ -7,7 +7,7 @@ const LANGUAGE = {
         "#register": "Register",
         "#username": "Username",
         "#password": "Password",
-    
+
         "#projectTitle": "Title",
         "#shortDescr": "Short Description",
         "#longDescr": "Long Description",
@@ -15,7 +15,7 @@ const LANGUAGE = {
         "#comment": "Comment",
         "#rating": "Rating",
         "#sendcomment": "Send Comment",
-    
+
         "#imprint": "Imprint",
         "#priacy": "Privacy",
         "#disclaimer": "Disclaimer",
@@ -29,7 +29,7 @@ const LANGUAGE = {
         "#register": "Registrieren",
         "#username": "Benutzername",
         "#password": "Passwort",
-    
+
         "#projectTitle": "Titel",
         "#shortDescr": "Kurzbeschreibung",
         "#longDescr": "Langbeschreibung",
@@ -37,7 +37,7 @@ const LANGUAGE = {
         "#comment": "Kommentar",
         "#rating": "Bewertung",
         "#sendcomment": "Kommentar senden",
-    
+
         "#imprint": "Impressum",
         "#priacy": "Datenschutz",
         "#disclaimer": "Haftungsausschluss",
@@ -59,26 +59,53 @@ if (id == null || id === "" || Number.isNaN(id)) {
     window.history.go(-1)
 }
 
-function setTitle(title) {
+const setTitle = (title) => {
+    if (title == null) return;
     document.getElementById('titel').innerHTML = title
 }
 
-function setKurzbeschreibung(kurzbeschreibung) {
+const setKurzbeschreibung = (kurzbeschreibung) => {
+    if (kurzbeschreibung == null) return;
     document.getElementById('kurzbeschreibung-content').innerHTML = kurzbeschreibung
 }
 
-function setBeschreibung(beschreibung) {
+const setBeschreibung = (beschreibung) => {
+    if (beschreibung == null) return;
     document.getElementById('beschreibung-content').innerHTML = beschreibung
 }
 
-function addZiel(ziel) {
+const addZiel = (ziel) => {
+    if (ziel == null)
+        return;
     const zieleListe = document.getElementById('ziele-content')
     const li = document.createElement('li')
     li.innerHTML = ziel
     zieleListe.appendChild(li)
 }
 
-function clearZiele() {
+const setLogo = (logoPath) => {
+    const logo = document.getElementById('project-logo')
+    if (logoPath != null && logoPath !== "") {
+        logo.src = logoPath
+    } else {
+        logo.src = "images/projects/1.png"
+    }
+}
+
+
+const clearZiele = () => {
     const zieleListe = document.getElementById('ziele-content')
     zieleListe.innerHTML = ''
+}
+
+const setProjektDetails = (projekt) => {
+    setTitle(projekt?.name)
+    setKurzbeschreibung(projekt?.kurzbeschreibung)
+    setBeschreibung(projekt?.beschreibung)
+    setLogo(projekt?.logoPath)
+    if (projekt != null)
+        clearZiele()
+    for (const ziel of projekt?.ziele ?? []) {
+        addZiel(ziel)
+    }
 }

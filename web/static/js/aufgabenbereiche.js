@@ -1,6 +1,7 @@
 class Aufgabenbereiche {
 
-    constructor(name, beschreibung) {
+    constructor(id, name, beschreibung) {
+        this.id = id;
         this.name = name;
         this.beschreibung = beschreibung;
     }

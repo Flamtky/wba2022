@@ -1,6 +1,7 @@
 class Projekt_Aufgabenbereich {
 
-    constructor(projektId, aufgabenbereichId) {
+    constructor(id, projektId, aufgabenbereichId) {
+        this.id = id;
         this.projektId = projektId;
         this.aufgabenbereichId = aufgabenbereichId;
     }
