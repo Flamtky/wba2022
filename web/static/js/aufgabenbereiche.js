@@ -1,4 +1,4 @@
-class Aufgabenbereiche {
+export default class Aufgabenbereiche {
 
     constructor(id, name, beschreibung) {
         this.id = id;

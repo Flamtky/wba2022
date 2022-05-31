@@ -1,4 +1,4 @@
-class Projekt_Artefakt {
+export default class Projekt_Artefakt {
 
     constructor(id, projektId, artefaktId, arbeitszeit) {
         this.id = id;

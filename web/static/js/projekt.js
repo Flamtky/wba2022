@@ -1,4 +1,4 @@
-class Projekt {
+export default class Projekt {
 
   constructor(id, name, beschreibung, logoPath, startDatum) {
     this.id = id;
@@ -21,3 +21,5 @@ class Projekt {
     return laufzeit
   }
 }
+
+export {LANGUAGE}

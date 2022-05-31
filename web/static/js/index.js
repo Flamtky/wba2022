@@ -1,3 +1,4 @@
+import Projekt from "../js/projekt.js";
 const LANGUAGE = {
     "en-US": {
         "#title": "StudBoard",
@@ -48,3 +49,5 @@ console.log("The language is: " + userLang)
 for (const key in langMap) {
     document.body.innerHTML = document.body.innerHTML.replaceAll(key, langMap[key])
 }
+
+export {LANGUAGE}

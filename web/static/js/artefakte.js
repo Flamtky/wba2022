@@ -1,4 +1,4 @@
-class Artefakte {
+export default class Artefakte {
 
     constructor(id, name, beschreibung, geplanteZeit) {
         this.id = id;

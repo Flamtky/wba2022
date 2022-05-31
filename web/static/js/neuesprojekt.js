@@ -68,3 +68,5 @@ document.getElementById('logo-input').addEventListener('change', function (evt) 
     }
     reader.readAsDataURL(file) // convert to base64 string
 })
+
+export {LANGUAGE}
