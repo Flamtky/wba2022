@@ -1,6 +1,5 @@
 const LANGUAGE = {
     "en-US": {
-        "#title": "StudBoard",
         "#projects": "Projects",
         "#newProject": "New Projekt",
         "#login": "Login",
@@ -22,7 +21,6 @@ const LANGUAGE = {
         "#contact": "Contact",
     },
     "de-DE": {
-        "#title": "StudBoard",
         "#projects": "Projekte",
         "#newProject": "Neues Projekt",
         "#login": "Einloggen",
