@@ -1,3 +1,4 @@
+import Projekt from "./projekt.js"
 const LANGUAGE = {
     "en-US": {
         "#projects": "Projects",
@@ -65,6 +66,49 @@ document.getElementById('logo-input').addEventListener('change', function (evt) 
         img.hidden = false
     }
     reader.readAsDataURL(file) // convert to base64 string
+})
+
+
+function generateString(length) {
+    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    
+    return result+".png";
+}
+
+// API Call
+
+function prepareProject() {
+    let projectDate = new Date(document.getElementById('start-date-input').value);
+    if (isNaN(projectDate.getTime())) {
+        alert("Please enter a valid date!")
+        return;
+    }
+    // to format "2022-06-05T11:52:14Z[UTC]"
+    projectDate = projectDate.toISOString().substring(0, 10) + "T" + projectDate.toISOString().substring(11, 19) + "Z" + "[UTC]";
+    const project = new Projekt(
+        undefined,
+        document.getElementById('projekttitel').value,
+        document.getElementById('kurzbeschreibung').value,
+        "/images/projects/" + (document.getElementById('logo-input').files[0]?.name ?? generateString(6)),
+        projectDate)
+    console.log(project)
+    project.pushToDB().then(response => {
+        //navigateTo('/projekte.html')
+    }).catch(error => {
+        console.log(error)
+        alert("Error: " + error.message)
+    })
+}
+
+// get form
+document.getElementsByClassName("main__content")[0].addEventListener('submit', function (evt) {
+    evt.preventDefault()
+    prepareProject()
 })
 
 export {LANGUAGE}

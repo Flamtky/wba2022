@@ -1,3 +1,4 @@
+import Projekt from "./projekt.js"
 const LANGUAGE = {
     "en-US": {
         "#projects": "Projects",
@@ -126,7 +127,8 @@ const getProjektDetails = async (id) => {
     return null
 }
 
-getProjektDetails(id).then(projekt => {
+getProjektDetails(id).then(response => {
+    const projekt = new Projekt(response.projektID, response.name, response.beschreibung, response.logoPath, response.startDate)
     setProjektDetails(projekt)
 }).catch(error => {
     console.error(error)

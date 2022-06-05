@@ -107,7 +107,7 @@ clearProjectList()
 getAllProjects().then(projects => {
     if (projects == null) return
     for (const project of projects) {
-        const newProject = addProjectToList(new Projekt(project.projektID, project.name, project.beschreibung, project.logoPath, project.startDatum))
+        const newProject = addProjectToList(new Projekt(project.projektID, project.name, project.beschreibung, project.logoPath, project.startDate))
         const projectList = document.getElementById("project_grid")
         projectList.appendChild(newProject)
     }
