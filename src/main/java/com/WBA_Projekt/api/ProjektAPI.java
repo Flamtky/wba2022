@@ -76,6 +76,11 @@ public class ProjektAPI {
         return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
     }
 
+    @OPTIONS
+    public Response options() {
+        return Response.ok().header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT").header("Access-Control-Allow-Headers", "Content-Type").build();
+    }
+
     // Updates a project
     @PATCH
     @Consumes("application/json")
