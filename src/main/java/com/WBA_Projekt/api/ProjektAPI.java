@@ -35,16 +35,16 @@ public class ProjektAPI {
     public Response getProjects(@QueryParam("id") String id) {
         if (id == null) {
             List<Projekt> projekte = em.createNamedQuery("Projekt.findAll", Projekt.class).getResultList();
-            return Response.ok(projekte).build();
+            return Response.ok(projekte).header("Access-Control-Allow-Origin", "*").build();
         }
         try {
             Projekt projekt = em.find(Projekt.class, Integer.parseInt(id));
             if (projekt == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.ok(projekt).build();
+            return Response.ok(projekt).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -56,13 +56,13 @@ public class ProjektAPI {
         // Check if the project already exists
         Projekt existingProject = em.find(Projekt.class, projekt.getProjektID());
         if (existingProject != null) {
-            return Response.status(Response.Status.CONFLICT).build();
+            return Response.status(Response.Status.CONFLICT).header("Access-Control-Allow-Origin", "*").build();
         }
         // Check if the project is valid
         if (projekt.getName() == null || projekt.getBeschreibung() == null ||
                 projekt.getBeschreibung().length() > 255 || projekt.getStartDate() == null ||
                 projekt.getLogoPath() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
         // Add the project
         try {
@@ -71,9 +71,9 @@ public class ProjektAPI {
             utx.commit();
         } catch (Exception e) {
             utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
         }
-        return Response.status(Response.Status.NO_CONTENT).build();
+        return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
     }
 
     // Updates a project
@@ -84,11 +84,11 @@ public class ProjektAPI {
         // Check if the project already exists
         Projekt existingProject = em.find(Projekt.class, projekt.getProjektID());
         if (existingProject == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
         }
         // Check if the projekt is valid
         if (projekt.getBeschreibung().length() > 255) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
 
         // Update the project
@@ -98,11 +98,11 @@ public class ProjektAPI {
             utx.commit();
         } catch (Exception e) {
             utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
         }
         // Get the updated project
         Projekt updatedProject = em.find(Projekt.class, projekt.getProjektID());
-        return Response.ok(updatedProject).build();
+        return Response.ok(updatedProject).header("Access-Control-Allow-Origin", "*").build();
     }
 
     // Deletes a project
@@ -115,7 +115,7 @@ public class ProjektAPI {
         try {
             Projekt existingProject = em.find(Projekt.class, Integer.parseInt(id));
             if (existingProject == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
             // Delete the project
             try {
@@ -124,11 +124,11 @@ public class ProjektAPI {
                 utx.commit();
             } catch (Exception e) {
                 utx.rollback();
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -142,16 +142,16 @@ public class ProjektAPI {
         try {
             Projekt existingProject = em.find(Projekt.class, Integer.parseInt(id));
             if (existingProject == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
             // Check if the artefact already exists
             Artefakt existingArtefact = em.find(Artefakt.class, projekt_Artefakt.getArtefaktId());
             if (existingArtefact == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
             // Check if the artefact is valid
             if (projekt_Artefakt.getArbeitszeit() < 0) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
             }
 
             // Add the artefact
@@ -161,12 +161,12 @@ public class ProjektAPI {
                 utx.commit();
             } catch (Exception e) {
                 utx.rollback();
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
             }
             // Get the updated project
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException | SystemException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -180,7 +180,7 @@ public class ProjektAPI {
         try {
             Projekt_Artefakt existingRelation = em.find(Projekt_Artefakt.class, Integer.parseInt(aid));
             if (existingRelation == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
             // Delete the Project_Artefakt
             try {
@@ -189,11 +189,11 @@ public class ProjektAPI {
                 utx.commit();
             } catch (Exception e) {
                 utx.rollback();
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 }

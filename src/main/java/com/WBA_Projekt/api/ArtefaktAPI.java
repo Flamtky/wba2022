@@ -34,18 +34,18 @@ public class ArtefaktAPI {
         if (id == null) {
             List<Artefakt> artefakte = em.createNamedQuery("Artefakt.findAll", Artefakt.class).getResultList();
             if (artefakte.isEmpty()) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.ok(artefakte).build();
+            return Response.ok(artefakte).header("Access-Control-Allow-Origin", "*").build();
         }
         try {
             Artefakt artefakt = em.find(Artefakt.class, Integer.parseInt(id));
             if (artefakt == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.ok(artefakt).build();
+            return Response.ok(artefakt).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -57,12 +57,12 @@ public class ArtefaktAPI {
         // Check if the artefakt already exists
         Artefakt existingArtefakt = em.find(Artefakt.class, artefakt.getArtefaktID());
         if (existingArtefakt != null) {
-            return Response.status(Response.Status.CONFLICT).build();
+            return Response.status(Response.Status.CONFLICT).header("Access-Control-Allow-Origin", "*").build();
         }
         // Check if the artefakt is valid
         if (artefakt.getName() == null || artefakt.getBeschreibung() == null ||
                 artefakt.getBeschreibung().length() > 255 || artefakt.getGeplanteZeit() < 0) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
         // Add the artefakt
         try {
@@ -71,9 +71,9 @@ public class ArtefaktAPI {
             utx.commit();
         } catch (Exception e) {
             utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
         }
-        return Response.status(Response.Status.NO_CONTENT).build();
+        return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
     }
 
     // Updates a artefakt
@@ -85,11 +85,11 @@ public class ArtefaktAPI {
         // Check if the artefakt already exists
         Artefakt existingArtefakt = em.find(Artefakt.class, artefakt.getArtefaktID());
         if (existingArtefakt == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
         }
         // Check if the artefakt is valid
         if (artefakt.getBeschreibung().length() > 255 || artefakt.getGeplanteZeit() < 0) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
         // Update the artefakt
         try {
@@ -98,14 +98,14 @@ public class ArtefaktAPI {
             utx.commit();
         } catch (Exception e) {
             utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
         }
         // Get the artefakt
         Artefakt newArtefakt = em.find(Artefakt.class, artefakt.getArtefaktID());
         if (newArtefakt == null) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
         }
-        return Response.ok(newArtefakt).build();
+        return Response.ok(newArtefakt).header("Access-Control-Allow-Origin", "*").build();
     }
 
     // Deletes a artefakt
@@ -119,7 +119,7 @@ public class ArtefaktAPI {
         try {
             Artefakt existingArtefakt = em.find(Artefakt.class, Integer.parseInt(id));
             if (existingArtefakt == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
             // Delete the artefakt
             try {
@@ -128,11 +128,11 @@ public class ArtefaktAPI {
                 utx.commit();
             } catch (Exception e) {
                 utx.rollback();
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 }

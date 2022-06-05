@@ -36,20 +36,20 @@ public class AufgabenbereichAPI {
         if (id == null) {
             List<Aufgabenbereich> aufgabenbereiche = em.createNamedQuery("Aufgabenbereich.findAll", Aufgabenbereich.class).getResultList();
             if (aufgabenbereiche.isEmpty()) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.ok(aufgabenbereiche).build();
+            return Response.ok(aufgabenbereiche).header("Access-Control-Allow-Origin", "*").build();
         }
 
         try {
             Aufgabenbereich aufgabenbereich = em.find(Aufgabenbereich.class, Integer.parseInt(id));
             if (aufgabenbereich == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.ok(aufgabenbereich).build();
+            return Response.ok(aufgabenbereich).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException e) {
             utx.rollback();
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -61,13 +61,13 @@ public class AufgabenbereichAPI {
         // Check if the aufgabenbereich already exists
         Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, aufgabenbereich.getAufgabenbereichID());
         if (existingAufgabenbereich != null) {
-            return Response.status(Response.Status.CONFLICT).build();
+            return Response.status(Response.Status.CONFLICT).header("Access-Control-Allow-Origin", "*").build();
         }
 
         // Check if the aufgabenbereich is valid
         if (aufgabenbereich.getName() == null ||
                 aufgabenbereich.getBeschreibung() == null || aufgabenbereich.getBeschreibung().length() > 255) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
 
         // Add the aufgabenbereich
@@ -77,9 +77,9 @@ public class AufgabenbereichAPI {
             utx.commit();
         } catch (Exception e) {
             utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
         }
-        return Response.status(Response.Status.NO_CONTENT).build();
+        return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
     }
 
     // Updates a aufgabenbereich
@@ -90,12 +90,12 @@ public class AufgabenbereichAPI {
         // Check if the aufgabenbereich exists
         Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, aufgabenbereich.getAufgabenbereichID());
         if (existingAufgabenbereich == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
         }
 
         // Check if the aufgabenbereich is valid
         if (aufgabenbereich.getBeschreibung().length() > 255) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
 
         // Update the aufgabenbereich
@@ -105,11 +105,11 @@ public class AufgabenbereichAPI {
             utx.commit();
         } catch (Exception e) {
             utx.rollback();
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
         }
         // Get the updated aufgabenbereich
         Aufgabenbereich updatedAufgabenbereich = em.find(Aufgabenbereich.class, aufgabenbereich.getAufgabenbereichID());
-        return Response.ok(updatedAufgabenbereich).build();
+        return Response.ok(updatedAufgabenbereich).header("Access-Control-Allow-Origin", "*").build();
     }
 
     // Deletes a aufgabenbereich
@@ -122,7 +122,7 @@ public class AufgabenbereichAPI {
             // Check if the aufgabenbereich exists
             Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, Integer.parseInt(id));
             if (existingAufgabenbereich == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
 
             // Delete the aufgabenbereich
@@ -132,12 +132,12 @@ public class AufgabenbereichAPI {
                 utx.commit();
             } catch (Exception e) {
                 utx.rollback();
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
             }
 
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -151,12 +151,12 @@ public class AufgabenbereichAPI {
             // Check if the aufgabenbereich exists
             Aufgabenbereich existingAufgabenbereich = em.find(Aufgabenbereich.class, Integer.parseInt(id));
             if (existingAufgabenbereich == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
             // Check if the projekt exists
             Projekt existingProjekt = em.find(Projekt.class, projekt_aufgabenbereich.getProjektId());
             if (existingProjekt == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
 
             try {
@@ -165,11 +165,11 @@ public class AufgabenbereichAPI {
                 utx.commit();
             } catch (Exception e) {
                 utx.rollback();
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException | SystemException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -183,7 +183,7 @@ public class AufgabenbereichAPI {
             // Check if the Projekt_Aufgabenbereich exists
             Projekt_Aufgabenbereich existingProjekt_Aufgabenbereich = em.find(Projekt_Aufgabenbereich.class, Integer.parseInt(aid));
             if (existingProjekt_Aufgabenbereich == null) {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                return Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             }
             // Delete the Projekt_Aufgabenbereich
             try {
@@ -192,11 +192,11 @@ public class AufgabenbereichAPI {
                 utx.commit();
             } catch (Exception e) {
                 utx.rollback();
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
             }
-            return Response.status(Response.Status.NO_CONTENT).build();
+            return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
         } catch (NumberFormatException e) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 }

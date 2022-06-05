@@ -38,31 +38,31 @@ public class Projekt_ArtefaktAPI {
                                 Projekt_Artefakt.class)
                         .setParameter("projektId", Integer.parseInt(projektId))
                         .setParameter("artefaktId", Integer.parseInt(artefaktId)).getSingleResult();
-                return projekt_artefakt == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(projekt_artefakt).build();
+                return projekt_artefakt == null ? Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build() : Response.ok(projekt_artefakt).header("Access-Control-Allow-Origin", "*").build();
             } catch (NumberFormatException e) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
             }
         } else if (projektId != null) {
             try {
                 List<Projekt_Artefakt> projekt_artefaktList = em.createNamedQuery("Projekt_Artefakt.findByProjektId",
                                 Projekt_Artefakt.class)
                         .setParameter("projektId", Integer.parseInt(projektId)).getResultList();
-                return projekt_artefaktList == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(projekt_artefaktList).build();
+                return projekt_artefaktList == null ? Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build() : Response.ok(projekt_artefaktList).header("Access-Control-Allow-Origin", "*").build();
             } catch (NumberFormatException e) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
             }
         } else if (artefaktId != null) {
             try {
                 List<Projekt_Artefakt> projekt_artefaktList = em.createNamedQuery("Projekt_Artefakt.findByArtefaktId",
                                 Projekt_Artefakt.class)
                         .setParameter("artefaktId", Integer.parseInt(artefaktId)).getResultList();
-                return projekt_artefaktList == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(projekt_artefaktList).build();
+                return projekt_artefaktList == null ? Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build() : Response.ok(projekt_artefaktList).header("Access-Control-Allow-Origin", "*").build();
             } catch (NumberFormatException e) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
             }
         } else {
             List<Projekt_Artefakt> projekt_artefaktList = em.createNamedQuery("Projekt_Artefakt.findAll", Projekt_Artefakt.class).getResultList();
-            return projekt_artefaktList == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(projekt_artefaktList).build();
+            return projekt_artefaktList == null ? Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build() : Response.ok(projekt_artefaktList).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 }

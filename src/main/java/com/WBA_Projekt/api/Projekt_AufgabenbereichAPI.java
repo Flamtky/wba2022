@@ -38,32 +38,32 @@ public class Projekt_AufgabenbereichAPI {
                                 Projekt_Aufgabenbereich.class)
                         .setParameter("projektId", projektId)
                         .setParameter("aufgabenbereichId", aufgabenbereichId).getSingleResult();
-                return projekt_aufgabenbereich != null ? Response.ok(projekt_aufgabenbereich).build() : Response.status(Response.Status.NOT_FOUND).build();
+                return projekt_aufgabenbereich != null ? Response.ok(projekt_aufgabenbereich).header("Access-Control-Allow-Origin", "*").build() : Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             } catch (NumberFormatException e) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
             }
         } else if (projektId != null) {
             try {
                 List<Projekt_Aufgabenbereich> projekt_aufgabenbereich = em.createNamedQuery("Projekt_Aufgabenbereich.findByProjektId",
                                 Projekt_Aufgabenbereich.class)
                         .setParameter("projektId", projektId).getResultList();
-                return projekt_aufgabenbereich != null ? Response.ok(projekt_aufgabenbereich).build() : Response.status(Response.Status.NOT_FOUND).build();
+                return projekt_aufgabenbereich != null ? Response.ok(projekt_aufgabenbereich).header("Access-Control-Allow-Origin", "*").build() : Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             } catch (NumberFormatException e) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
             }
         } else if (aufgabenbereichId != null) {
             try {
                 List<Projekt_Aufgabenbereich> projekt_aufgabenbereich = em.createNamedQuery("Projekt_Aufgabenbereich.findByAufgabenbereichId",
                                 Projekt_Aufgabenbereich.class)
                         .setParameter("aufgabenbereichId", aufgabenbereichId).getResultList();
-                return projekt_aufgabenbereich != null ? Response.ok(projekt_aufgabenbereich).build() : Response.status(Response.Status.NOT_FOUND).build();
+                return projekt_aufgabenbereich != null ? Response.ok(projekt_aufgabenbereich).header("Access-Control-Allow-Origin", "*").build() : Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
             } catch (NumberFormatException e) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
             }
         } else {
             List<Projekt_Aufgabenbereich> projekt_aufgabenbereich = em.createNamedQuery("Projekt_Aufgabenbereich.findAll",
                     Projekt_Aufgabenbereich.class).getResultList();
-            return projekt_aufgabenbereich != null ? Response.ok(projekt_aufgabenbereich).build() : Response.status(Response.Status.NOT_FOUND).build();
+            return projekt_aufgabenbereich != null ? Response.ok(projekt_aufgabenbereich).header("Access-Control-Allow-Origin", "*").build() : Response.status(Response.Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 }
