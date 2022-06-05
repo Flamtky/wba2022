@@ -43,7 +43,7 @@
                 <option value="my">#myProjects</option>
             </select>
             <div class="projectlist">
-                <div>
+                <div id="project_overview">
                     <ul class="project_overview">
                         <li class="overview_project_name">
                             <a href="projektdetails.html?id=1">
@@ -77,21 +77,23 @@
                         </li>
                     </ul>
                 </div>
-                <div class="project_grid">
-                    <div class="project_grid_item">
-                        <div class="project_grid_item_content">
-                            <div class="project_grid_item_content_title">
-                                <a href="projektdetails.html?id=1">
-                                    <h2>Projekt 1</h2>
-                                </a>
-                            </div>
-                            <div class="project_grid_item_content_description">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel
-                                    hendrerit
-                                </p>
+                <div id="project_grid" class="project_grid">
+                    <template id="project-template">
+                        <div class="project_grid_item">
+                            <div class="project_grid_item_content">
+                                <div class="project_grid_item_content_title">
+                                    <a href="projektdetails.html?id=1">
+                                        <h2>Projekt 1</h2>
+                                    </a>
+                                </div>
+                                <div class="project_grid_item_content_description">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisi vel
+                                        hendrerit
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </template>
                     <div class="project_grid_item">
                         <div class="project_grid_item_content">
                             <div class="project_grid_item_content_title">
@@ -197,4 +199,5 @@
     <script src="static/js/projekte.js" type="module"></script>
     <script src="static/js/login.js"></script>
 </body>
+
 </html>

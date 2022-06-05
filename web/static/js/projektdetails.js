@@ -108,4 +108,28 @@ const setProjektDetails = (projekt) => {
     }
 }
 
+// API Call
+const getProjektDetails = async (id) => {
+    const response = await fetch("http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/projekt?id=" + id)
+    if (response.ok) {
+        try {
+            const details = await response.json()
+            return details
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    if (response.status === 404) {
+        window.history.go(-1)
+    }
+    console.log("Error: " + response.status)
+    return null
+}
+
+getProjektDetails(id).then(projekt => {
+    setProjektDetails(projekt)
+}).catch(error => {
+    console.error(error)
+})
+
 export {LANGUAGE}

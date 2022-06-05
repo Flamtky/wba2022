@@ -1,4 +1,4 @@
-import Projekt from "../js/projekt.js";
+import Aufgabenbereiche from "./aufgabenbereiche.js"
 const LANGUAGE = {
     "en-US": {
         "#projects": "Projects",
@@ -47,5 +47,28 @@ console.log("The language is: " + userLang)
 for (const key in langMap) {
     document.body.innerHTML = document.body.innerHTML.replaceAll(key, langMap[key])
 }
+
+// API Call
+const getAllAufgabenbereiche = async () => {
+    const response = await fetch("http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/aufgabenbereich")
+    if (response.ok || response.status === 404) {
+        try {
+            const aufgabenbereiche = await response.json()
+            return aufgabenbereiche
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    console.log("Error: " + response.status)
+    return null
+}
+
+getAllAufgabenbereiche().then(aufgabenbereiche => {
+    for (const aufgabenbereich of aufgabenbereiche) {
+        console.log(new Aufgabenbereiche(aufgabenbereich.aufgabenbereichID, aufgabenbereich.name, aufgabenbereich.beschreibung))
+    }
+}).catch(error => {
+    console.error(error)
+})
 
 export {LANGUAGE}
