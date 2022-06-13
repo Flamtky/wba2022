@@ -58,7 +58,7 @@ public class Aufgabenbereich implements Serializable {
 
     public void setBeschreibung(String beschreibung) {
         // Maximal 255 Zeichen
-        if (beschreibung.length() > 255) return;
+        if (beschreibung == null || beschreibung.length() > 255) return;
         this.beschreibung = beschreibung;
     }
 

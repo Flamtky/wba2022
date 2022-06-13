@@ -78,6 +78,7 @@ const getAllArtefacts = async () => {
         try {
             return await response.json()
         } catch (error) {
+            console.error(response)
             console.error(error)
         }
     }
@@ -130,8 +131,7 @@ function prepareAufgabenbereich() {
     aufgabenbereich.pushToDB().then(response => {
         //navigateTo('/projekte.html')
     }).catch(error => {
-        console.log(error)
-        alert("Error: " + error.message)
+        console.error(error)
     })
 }
 

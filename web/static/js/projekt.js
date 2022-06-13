@@ -34,7 +34,6 @@ export default class Projekt {
     projectToSend.startDate = date.toISOString().substring(0, 10) + "T" + date.toISOString().substring(11, 19) + "Z" + "[UTC]";
     projectToSend.startDatum = undefined;
 
-    projectToSend = JSON.stringify(this);
     const response = await fetch('http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/projekt', {
       method: 'POST',
       headers: {

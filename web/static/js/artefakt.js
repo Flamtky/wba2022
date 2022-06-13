@@ -13,8 +13,7 @@ export default class Artefakt {
         artefaktToSend.artefaktID = this.id;
         artefaktToSend.id = undefined;
 
-        artefaktToSend = JSON.stringify(this);
-        const response = await fetch('http://localhost:8080/WBA-Artefakt-1.0-SNAPSHOT/api/artefakt', {
+        const response = await fetch('http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/artefakt', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

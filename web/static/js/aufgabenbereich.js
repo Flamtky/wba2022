@@ -12,12 +12,11 @@ export default class Aufgabenbereich {
         aufgabenbereichToSend.aufgabenbereichID = this.id;
         aufgabenbereichToSend.id = undefined;
 
-        aufgabenbereichToSend = JSON.stringify(this);
-        const response = await fetch('http://localhost:8080/WBA-Aufgabenbereich-1.0-SNAPSHOT/api/aufgabenbereich', {
+        const response = await fetch('http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/aufgabenbereich', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
             },
             body: JSON.stringify(this)
         });
