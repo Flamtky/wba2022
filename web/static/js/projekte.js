@@ -1,4 +1,5 @@
 import Projekt from "./projekt.js"
+
 const LANGUAGE = {
     "en-US": {
         "#projects": "Projects",
@@ -49,8 +50,7 @@ const getAllProjects = async () => {
     const response = await fetch("http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/projekt")
     if (response.ok || response.status === 404) {
         try {
-            const projects = await response.json()
-            return projects
+            return await response.json()
         } catch (error) {
             console.error(error)
         }
@@ -92,7 +92,7 @@ const clearProjectList = () => {
             projectList.removeChild(child)
         }
         // if length is 1, the template is still there -> break
-        if (projectList.childElementCount == 1) {
+        if (projectList.childElementCount === 1) {
             break
         }
     }

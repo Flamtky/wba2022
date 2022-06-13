@@ -1,4 +1,5 @@
 import Projekt from "./projekt.js"
+
 const LANGUAGE = {
     "en-US": {
         "#projects": "Projects",
@@ -114,8 +115,7 @@ const getProjektDetails = async (id) => {
     const response = await fetch("http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/projekt?id=" + id)
     if (response.ok) {
         try {
-            const details = await response.json()
-            return details
+            return await response.json()
         } catch (error) {
             console.error(error)
         }
