@@ -1,5 +1,6 @@
 import Aufgabenbereich from "./aufgabenbereich.js"
 import Artefakt from "./artefakt.js";
+import Projekt_Artefakt from "./projekt_artefakt.js";
 
 const LANGUAGE = {
     "en-US": {
@@ -132,10 +133,47 @@ function prepareAufgabenbereich() {
         //navigateTo('/projekte.html')
     }).catch(error => {
         console.error(error)
+        alert("Error: " + error.message)
     })
 }
 
-prepareArtefact()
-prepareAufgabenbereich()
+function prepareProjekt_Artefakt() {
+    let projektID = window.prompt("ProjektID:", "2");
+    projektID = parseInt(projektID)
+    if (isNaN(projektID)) {
+        alert("projektID ist keine Zahl")
+        return
+    }
+    let artefaktID = window.prompt("ArtefaktID:", "6");
+    artefaktID = parseInt(artefaktID)
+    artefaktID = 6
+    if (isNaN(artefaktID)) {
+        alert("artefaktID ist keine Zahl")
+        return
+    }
+    let arbeitszeit = window.prompt("Arbeitszeit:", "100");
+    arbeitszeit = parseInt(arbeitszeit)
+    if (isNaN(arbeitszeit)) {
+        alert("arbeitszeit ist keine Zahl")
+        return
+    }
+    const projekt_artefakt = new Projekt_Artefakt(
+        undefined,
+        projektID,
+        artefaktID,
+        arbeitszeit
+    )
+    console.log(projekt_artefakt)
+    projekt_artefakt.pushToDB().then(response => {
+        //navigateTo('/projekte.html')
+    }).catch(error => {
+        console.log(error)
+        alert("Error: " + error.message)
+    })
+}
+
+//prepareArtefact()
+//prepareAufgabenbereich()
+prepareProjekt_Artefakt()
 
 export {LANGUAGE}
