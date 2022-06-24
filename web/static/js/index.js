@@ -1,6 +1,7 @@
 import Aufgabenbereich from "./aufgabenbereich.js"
 import Artefakt from "./artefakt.js";
 import Projekt_Artefakt from "./projekt_artefakt.js";
+import Projekt from "./projekt.js";
 
 const LANGUAGE = {
     "en-US": {
@@ -67,7 +68,7 @@ getAllAufgabenbereiche().then(aufgabenbereiche => {
 
 const getAllArtefacts = async () => {
     const response = await fetch("http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/artefakt")
-    if (response.ok || response.status === 404) {
+    if (response.ok || response.status == 404) {
         try {
             return await response.json()
         } catch (error) {
@@ -79,10 +80,50 @@ const getAllArtefacts = async () => {
     return null
 }
 
+const getNewestProjects = async () => {
+    const response = await fetch("http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/projekt/newest?limit=3")
+    if (response.ok || response.status == 404) {
+        try {
+            return await response.json()
+        } catch (error) {
+            console.error(response)
+            console.error(error)
+        }
+    }
+    console.log("Error: " + response.status)
+    return null
+}
+
+const addNewestProjectToPage = (projekt) => {
+    const template = document.getElementById("newestProjectContainer")
+    // clone template
+    const clone = template.content.cloneNode(true)
+    // set new title
+    clone.querySelector("h3").innerHTML = projekt.name
+    // title href
+    clone.querySelector("a").href = "/projektdetails.html?id=" + projekt.id
+    // set new description
+    clone.querySelector("p").innerHTML = projekt.beschreibung
+    // set new image
+    clone.querySelector("img").src = projekt.logopath
+    // append to page
+    document.getElementsByClassName("newest_projects")[0].appendChild(clone)
+}
+
+
 getAllArtefacts().then(artefacts => {
     if (artefacts == null) return
     for (const artefact of artefacts) {
         console.log(new Artefakt(artefact.artefaktID, artefact.name, artefact.beschreibung, artefact.geplanteZeit))
+    }
+}).catch(error => {
+    console.log(error)
+})
+
+getNewestProjects().then(projects => {
+    if (projects == null) return
+    for (const project of projects) {
+        addNewestProjectToPage(new Projekt(project.projektID, project.name, project.beschreibung, project.logoPath, project.startDate))
     }
 }).catch(error => {
     console.log(error)
@@ -102,7 +143,7 @@ function prepareArtefact() {
         name,
         beschreibung,
         geplanteZeit
-        )
+    )
     console.log(artefact)
     artefact.pushToDB().then(response => {
         //navigateTo('/projekte.html')

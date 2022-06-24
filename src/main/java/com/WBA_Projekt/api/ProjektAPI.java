@@ -48,6 +48,23 @@ public class ProjektAPI {
         }
     }
 
+    // Get newest Projects, if optional limit parameter is set, returns that amount of projects
+    @GET
+    @Path("/newest")
+    @Produces("application/json")
+    public Response getNewestProjects(@QueryParam("limit") String limit) {
+        if (limit == null) {
+            List<Projekt> projekte = em.createNamedQuery("Projekt.findNewest", Projekt.class).getResultList();
+            return Response.ok(projekte).header("Access-Control-Allow-Origin", "*").build();
+        }
+        try {
+            List<Projekt> projekte = em.createNamedQuery("Projekt.findNewest", Projekt.class).setMaxResults(Integer.parseInt(limit)).getResultList();
+            return Response.ok(projekte).header("Access-Control-Allow-Origin", "*").build();
+        } catch (NumberFormatException e) {
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
+        }
+    }
+
     // Adds a new project
     @POST
     @Consumes("application/json")

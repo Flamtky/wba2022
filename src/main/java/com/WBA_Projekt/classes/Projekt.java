@@ -10,7 +10,8 @@ import java.util.Date;
 @Entity
 @Table(name = "Projekt")
 @NamedQueries({
-        @NamedQuery(name = "Projekt.findAll", query = "SELECT p FROM Projekt p")
+        @NamedQuery(name = "Projekt.findAll", query = "SELECT p FROM Projekt p"),
+        @NamedQuery(name = "Projekt.findNewest", query = "SELECT p FROM Projekt p ORDER BY p.startDatum DESC")
 })
 public class Projekt implements Serializable {
     private static final long serialVersionUID = 1L;
