@@ -6,10 +6,6 @@ const LANGUAGE = {
     "en-US": {
         "#projects": "Projects",
         "#newProject": "New Projekt",
-        "#login": "Login",
-        "#register": "Register",
-        "#username": "Username",
-        "#password": "Password",
 
         "#welcome1": "Welcome to ",
         "#welcome2": "StudBoard",
@@ -25,10 +21,6 @@ const LANGUAGE = {
     "de-DE": {
         "#projects": "Projekte",
         "#newProject": "Neues Projekt",
-        "#login": "Einloggen",
-        "#register": "Registrieren",
-        "#username": "Benutzername",
-        "#password": "Passwort",
 
         "#welcome1": "Willkommen bei ",
         "#welcome2": "StudBoard",
@@ -174,6 +166,6 @@ function prepareProjekt_Artefakt() {
 
 //prepareArtefact()
 //prepareAufgabenbereich()
-prepareProjekt_Artefakt()
+//prepareProjekt_Artefakt()
 
 export {LANGUAGE}
