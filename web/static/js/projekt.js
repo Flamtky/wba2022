@@ -42,6 +42,6 @@ export default class Projekt {
       },
       body: JSON.stringify(this)
     });
-    return response.ok;
+    return response.status == 200 ? response.json() : null;
   }
 }

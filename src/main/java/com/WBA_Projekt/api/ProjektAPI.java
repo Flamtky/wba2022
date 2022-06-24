@@ -90,7 +90,11 @@ public class ProjektAPI {
             utx.rollback();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
         }
-        return Response.status(Response.Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*").build();
+        existingProject = em.find(Projekt.class, projekt.getProjektID());
+        if (existingProject == null) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).header("Access-Control-Allow-Origin", "*").build();
+        }
+        return Response.ok(existingProject).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @OPTIONS

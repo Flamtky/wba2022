@@ -71,7 +71,6 @@ onRegister = () => {
     };
 }
 
-console.log(loginBtn)
 // If pressed on login button
 document.getElementById('login-button').addEventListener('click', function () {
     console.log('login');

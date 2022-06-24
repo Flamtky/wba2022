@@ -98,7 +98,13 @@ function prepareProject() {
         projectDate)
     console.log(project)
     project.pushToDB().then(response => {
-        //navigateTo('/projekte.html')
+        console.log(response)
+        if (response != null) {
+            window.location.href = "/projektdetails.html?id=" + response.projektID
+        } else {
+            alert("Something went wrong!")
+            console.error(response)
+        }
     }).catch(error => {
         console.log(error)
         alert("Error: " + error.message)
