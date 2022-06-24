@@ -138,15 +138,15 @@ function prepareAufgabenbereich() {
 }
 
 function prepareProjekt_Artefakt() {
-    let projektID = window.prompt("ProjektID:", "2");
+    let projektID = window.prompt("ProjektID:", "5");
     projektID = parseInt(projektID)
     if (isNaN(projektID)) {
         alert("projektID ist keine Zahl")
         return
     }
-    let artefaktID = window.prompt("ArtefaktID:", "6");
+    let artefaktID = window.prompt("ArtefaktID:", "7");
     artefaktID = parseInt(artefaktID)
-    artefaktID = 6
+    artefaktID = 2
     if (isNaN(artefaktID)) {
         alert("artefaktID ist keine Zahl")
         return
