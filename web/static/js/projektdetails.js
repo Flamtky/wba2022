@@ -134,4 +134,41 @@ getProjektDetails(id).then(response => {
     console.error(error)
 })
 
+// Get Comments from Local Storage
+const getComments = () => {
+    const comments = localStorage.getItem('comments')
+    if (comments != null) {
+        // sort by date
+        return JSON.parse(comments).sort((a, b) => {
+            return new Date(b.date) - new Date(a.date)
+        })
+    }
+    return []
+}
+
+// Add Comment to Local Storage
+const addComment = (text, rating) => {
+    if (text == null || text === "" || rating == "0")
+        return;
+    const comment = {
+        text: text,
+        rating: rating,
+        date: new Date()
+    }
+
+    const comments = getComments()
+    comments.push(comment)
+    localStorage.setItem('comments', JSON.stringify(comments))
+}
+
+document.getElementsByClassName('comment_form')[0].addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    const text = document.getElementById('comment').value
+    const rating = document.getElementById('rating').value
+    addComment(text, rating)
+    document.getElementById('comment').value = ""
+    document.getElementById('rating').value = "1"
+})
+
 export {LANGUAGE}
