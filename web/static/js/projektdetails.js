@@ -9,6 +9,7 @@ const LANGUAGE = {
         "#shortDescr": "Short Description",
         "#longDescr": "Long Description",
         "#goals": "Goals",
+        "#comments": "Comments",
         "#comment": "Comment",
         "#rating": "Rating",
         "#sendcomment": "Send Comment",
@@ -26,6 +27,7 @@ const LANGUAGE = {
         "#shortDescr": "Kurzbeschreibung",
         "#longDescr": "Langbeschreibung",
         "#goals": "Ziele",
+        "#comments": "Kommentare",
         "#comment": "Kommentar",
         "#rating": "Bewertung",
         "#sendcomment": "Kommentar senden",
@@ -84,6 +86,18 @@ const setLogo = (logoPath) => {
     }
 }
 
+const addCommentToPage = (comment) => {
+    const template = document.getElementById("comment_template")
+    // clone template
+    const clone = template.content.cloneNode(true)
+    const fields = clone.querySelectorAll("p")
+    // set new title
+    fields[0].innerHTML = comment.text
+    fields[1].innerHTML = comment.rating
+    fields[2].innerHTML = comment.date
+    // append to page
+    document.getElementById("comments").appendChild(clone)
+}
 
 const clearZiele = () => {
     const zieleListe = document.getElementById('ziele-content')
@@ -138,9 +152,13 @@ const getComments = () => {
     return []
 }
 
+for (const c of getComments()) {
+    addCommentToPage(c)
+}
+
 // Add Comment to Local Storage
 const addComment = (text, rating) => {
-    if (text == null || text === "" || rating == "0")
+    if (text == null || text === "")
         return;
     const comment = {
         text: text,
@@ -151,6 +169,7 @@ const addComment = (text, rating) => {
     const comments = getComments()
     comments.push(comment)
     localStorage.setItem('comments', JSON.stringify(comments))
+    addCommentToPage(comment)
 }
 
 document.getElementsByClassName('comment_form')[0].addEventListener('submit', (e) => {

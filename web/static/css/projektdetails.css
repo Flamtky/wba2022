@@ -169,3 +169,12 @@
 .comment_form {
     padding-bottom: 40px;
 }
+
+.comments {
+    width: 100%;
+}
+
+.comments div {
+    display: flex;
+    justify-content: space-evenly;
+}
