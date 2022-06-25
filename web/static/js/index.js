@@ -105,7 +105,7 @@ const addNewestProjectToPage = (projekt) => {
     // set new description
     clone.querySelector("p").innerHTML = projekt.beschreibung
     // set new image
-    clone.querySelector("img").src = projekt.logopath
+    clone.querySelector("img").src = projekt.logoPath
     // append to page
     document.getElementsByClassName("newest_projects")[0].appendChild(clone)
 }

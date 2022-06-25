@@ -146,7 +146,7 @@ const getComments = () => {
     if (comments != null) {
         // sort by date
         return JSON.parse(comments).sort((a, b) => {
-            return new Date(b.date) - new Date(a.date)
+            return new Date(a.date) - new Date(b.date)
         })
     }
     return []
@@ -160,10 +160,18 @@ for (const c of getComments()) {
 const addComment = (text, rating) => {
     if (text == null || text === "")
         return;
+    // Date format: dd.mm.yyyy hh:mm:ss
     const comment = {
         text: text,
         rating: rating,
-        date: new Date()
+        date: new Date().toLocaleString("de-DE", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        })
     }
 
     const comments = getComments()
