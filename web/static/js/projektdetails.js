@@ -4,10 +4,6 @@ const LANGUAGE = {
     "en-US": {
         "#projects": "Projects",
         "#newProject": "New Projekt",
-        "#login": "Login",
-        "#register": "Register",
-        "#username": "Username",
-        "#password": "Password",
 
         "#projectTitle": "Title",
         "#shortDescr": "Short Description",
@@ -25,10 +21,6 @@ const LANGUAGE = {
     "de-DE": {
         "#projects": "Projekte",
         "#newProject": "Neues Projekt",
-        "#login": "Einloggen",
-        "#register": "Registrieren",
-        "#username": "Benutzername",
-        "#password": "Passwort",
 
         "#projectTitle": "Titel",
         "#shortDescr": "Kurzbeschreibung",

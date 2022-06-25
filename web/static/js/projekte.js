@@ -1,17 +1,16 @@
 import Projekt from "./projekt.js"
+import ProjektSort from "./projektSort.js";
+import Projekt_Artefakt from "./projekt_artefakt.js";
 
 const LANGUAGE = {
     "en-US": {
         "#projects": "Projects",
         "#newProject": "New Projekt",
-        "#login": "Login",
-        "#register": "Register",
-        "#username": "Username",
-        "#password": "Password",
     
         "#filter": "Filter:",
         "#allProjects": "All projects",
-        "#myProjects": "My projects",
+        "#startDate": "Start Date",
+        "#runTime": "Runtime",
     
         "#imprint": "Imprint",
         "#priacy": "Privacy",
@@ -21,14 +20,11 @@ const LANGUAGE = {
     "de-DE": {
         "#projects": "Projekte",
         "#newProject": "Neues Projekt",
-        "#login": "Einloggen",
-        "#register": "Registrieren",
-        "#username": "Benutzername",
-        "#password": "Passwort",
     
         "#filter": "Filter:",
         "#allProjects": "Alle Projekte",
-        "#myProjects": "Meine Projekte",
+        "#startDate": "Startdatum",
+        "#runTime": "Laufzeit",
     
         "#imprint": "Impressum",
         "#priacy": "Datenschutz",
@@ -39,6 +35,7 @@ const LANGUAGE = {
 
 let userLang = navigator.language || navigator.userLanguage
 let langMap = LANGUAGE[userLang] || LANGUAGE["en-US"]
+let allProjects = []
 console.log("The language is: " + userLang)
 
 for (const key in langMap) {
@@ -104,15 +101,80 @@ const clearProjectList = () => {
 
 clearProjectList()
 
-getAllProjects().then(projects => {
+const getAllProject_Artefacts = async () => {
+    const response = await fetch("http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/projekt_artefakt")
+    if (response.ok || response.status == 404) {
+        try {
+            return await response.json()
+        } catch (error) {
+            console.error(response)
+            console.error(error)
+        }
+    }
+    console.log("Error: " + response.status)
+    return null
+}
+
+const getAllArtefacts = async () => {
+    const response = await fetch("http://localhost:8080/WBA-Projekt-1.0-SNAPSHOT/api/artefakt")
+    if (response.ok || response.status == 404) {
+        try {
+            return await response.json()
+        } catch (error) {
+            console.error(response)
+            console.error(error)
+        }
+    }
+    console.log("Error: " + response.status)
+    return null
+}
+
+(async () => {
+    const projects = await getAllProjects()
     if (projects == null) return
     for (const project of projects) {
-        const newProject = addProjectToList(new Projekt(project.projektID, project.name, project.beschreibung, project.logoPath, project.startDate))
+        allProjects.push(new Projekt(project.projektID, project.name, project.beschreibung, project.logoPath, project.startDate))
+    }
+    for (const project of allProjects) {
+        const newProject = addProjectToList(project)
         const projectList = document.getElementById("project_grid")
         projectList.appendChild(newProject)
     }
-}).catch(error => {
-    console.log(error)
+
+    const project_artefacts = await getAllProject_Artefacts()
+    const artefacts = await getAllArtefacts()
+
+    for (const project_artefact of project_artefacts) {
+        const project = allProjects.find(p => p.id === project_artefact.projektId)
+        const artefact = artefacts.find(a => a.artefaktID === project_artefact.artefaktId)
+        if (project === undefined || artefact === undefined) continue
+        project.addProjektArtefaktToList(new Projekt_Artefakt(project_artefact.id, project_artefact.projektId, project_artefact.artefaktId, project_artefact.arbeitszeit))
+    }
+})()
+
+// Sort-filter
+document.getElementById("project-filter").addEventListener('change', (e) => {
+    if (allProjects == null) return
+    const project_sort = new ProjektSort(allProjects)
+
+    switch (e.target.value) {
+        case "all":
+            project_sort.sortID()
+            break
+        case "date":
+            project_sort.sortDate()
+            break
+        case "time":
+            project_sort.sortLaufzeit()
+            break
+    }
+    clearProjectList()
+    for (const project of project_sort.projektListe) {
+        const newProject = addProjectToList(project)
+        const projectList = document.getElementById("project_grid")
+        projectList.appendChild(newProject)
+    }
+
 })
 
 export {LANGUAGE}

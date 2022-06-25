@@ -8,17 +8,23 @@ export default class Projekt {
     // "2022-06-05T11:52:14Z[UTC]" to Date
     this.startDatum = new Date().setUTCFullYear(startDatum.substring(0, 4), startDatum.substring(5, 7) - 1, startDatum.substring(8, 10));
     this.startDatum = new Date(this.startDatum).setHours(startDatum.substring(11, 13), startDatum.substring(14, 16), startDatum.substring(17, 19));
+    this.projektArtefaktListe = []
     // TODO: Ziele ????
   }
 
-  get projektLaufzeit() {
-    return this.berechneProjektLaufzeit();
+  addProjektArtefaktToList(artefakt){
+    if (artefakt == null || this.projektArtefaktListe.includes(artefakt)) return
+    this.projektArtefaktListe.push(artefakt)
   }
 
-  berechneProjektLaufzeit(artefaktListe) {
+  get projektLaufzeit() {
+    return this.berechneProjektLaufzeit(this.projektArtefaktListe);
+  }
+
+  berechneProjektLaufzeit(projektArtefaktListe) {
     let laufzeit = 0;
-    for (const artefakt of artefaktListe) {
-      laufzeit += artefakt.geplanteZeit
+    for (const projekt_artefakt of projektArtefaktListe) {
+      laufzeit += projekt_artefakt.arbeitszeit
     }
     return laufzeit
   }
