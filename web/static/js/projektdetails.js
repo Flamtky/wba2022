@@ -140,18 +140,25 @@ getProjektDetails(id).then(response => {
 })
 
 // Get Comments from Local Storage
-const getComments = () => {
+const getComments = (projectId) => {
     const comments = localStorage.getItem('comments')
     if (comments != null) {
+        let ret
+        try {
+            ret = JSON.parse(comments)[projectId].sort((a, b) => {
+                return new Date(a.date) - new Date(b.date)
+            })
+        } catch (error) {
+            console.error(error)
+            ret = []
+        }
         // sort by date
-        return JSON.parse(comments).sort((a, b) => {
-            return new Date(a.date) - new Date(b.date)
-        })
+        return ret
     }
     return []
 }
 
-for (const c of getComments()) {
+for (const c of getComments(id)) {
     addCommentToPage(c)
 }
 
@@ -173,9 +180,17 @@ const addComment = (text, rating) => {
         })
     }
 
-    const comments = getComments()
-    comments.push(comment)
-    localStorage.setItem('comments', JSON.stringify(comments))
+    const comments = localStorage.getItem('comments') ?? "{}"
+    let parsedComments = {}
+    try {
+        parsedComments = JSON.parse(comments)
+    } catch (error) {
+        console.error(error)
+    }
+    parsedComments[id] = parsedComments[id] ?? []
+    parsedComments[id].push(comment)
+    localStorage.setItem('comments', JSON.stringify(parsedComments))
+
     addCommentToPage(comment)
 }
 
