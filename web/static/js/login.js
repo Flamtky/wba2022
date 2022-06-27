@@ -22,21 +22,30 @@ for (const key in langMap) {
     document.body.innerHTML = document.body.innerHTML.replaceAll(key, langMap[key])
 }
 
-const loginBtn = document.getElementById('login-button');
-const registerBtn = document.getElementById('register-button');
-const userNameInput = document.getElementById('user-name-input');
-const passwordInput = document.getElementById('password-input');
-
 const onLogin = () => {
     document.getElementById('user-name-input').disabled = !document.getElementById('user-name-input').disabled;
     document.getElementById('password-input').disabled = !document.getElementById('password-input').disabled;
     document.getElementById('login-button').textContent = langMap["#logout"] === document.getElementById('login-button').textContent ? langMap["#login"] : langMap["#logout"];
     document.getElementById('register-button').hidden = !document.getElementById('register-button').hidden;
+    let cookieName = "login"
+    let cookieValue = langMap["#logout"] === document.getElementById('login-button').textContent
+    let cookieExpire = new Date(Date.now() + (1000 * 60 * 60 * 24)); // 24 hours
+    let cookiePath = "path=/"
+    document.cookie = cookieName + "=" + cookieValue + "; expires=" + cookieExpire.toUTCString() + ";" + cookiePath
+    console.log("Cookie set: ", document.cookie)
+    console.log(cookieName + "=" + cookieValue + "; expires=" + cookieExpire.toUTCString() + ";" + cookiePath)
+    // set cookie login to true that expires in 24 hours
 }
 
+// if login cookie is set, then login
+if (document.cookie.includes("login=true")) {
+    onLogin()
+}
+
+
 onRegister = () => {
-    const userName = userNameInput.value;
-    const password = passwordInput.value;
+    const userName = document.getElementById('user-name-input').value;
+    const password = document.getElementById('password-input').value;
     const xhr = new XMLHttpRequest();
     if (userName.trim() === '' || password.trim() === '') {
         alert('Please enter your user name and password');
@@ -73,7 +82,6 @@ onRegister = () => {
 
 // If pressed on login button
 document.getElementById('login-button').addEventListener('click', function () {
-    console.log('login');
     onLogin();
 });
 
