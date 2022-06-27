@@ -59,8 +59,7 @@ const setTitle = (title) => {
 }
 
 const setKurzbeschreibung = (kurzbeschreibung) => {
-    if (kurzbeschreibung == null) return;
-    document.getElementById('kurzbeschreibung-content').innerHTML = kurzbeschreibung
+    document.getElementById('kurzbeschreibung-content').innerHTML = kurzbeschreibung ?? ""
 }
 
 const setBeschreibung = (beschreibung) => {
